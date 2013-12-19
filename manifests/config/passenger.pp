@@ -9,8 +9,6 @@ class foreman::config::passenger (
   $scl_prefix = undef
 ) {
 
-
-
   # validate parameter values
   validate_string($listen_on_interface)
 
