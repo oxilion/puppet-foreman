@@ -18,8 +18,20 @@
 # $use_vhost::              Enclose apache configuration in <VirtualHost>...</VirtualHost>
 #                           type:boolean
 #
-# $ssl::                    Enable and set require_ssl in Foreman settings (note: requires passenger, SSL does not apply to kickstarts)
+# $ssl::                    Enable and set require_ssl in Foreman settings (note: requires passenger, SSL does not apply to kickstarts)=
 #                           type:boolean
+#
+# $ssl_cert::               Path to SSL cert to be used with SSL Apache::Vhost.
+#                           type: string
+#
+# $ssl_key::                Path to SSL private key to be used with SSL Apache::Vhost.
+#                           type: string
+#
+# $ssl_ca::                 Path to SSL CA cert to be used with SSL Apache::Vhost.
+#                           type: string
+#
+# $ssl_chain::              Path to SSL CA chain to be used with SSL Apache::Vhost.
+#                           trype: string
 #
 # $custom_repo::            No need to change anything here by default
 #                           if set to true, no repo will be added by this module, letting you to
