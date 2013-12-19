@@ -104,6 +104,10 @@ class foreman::params {
   $client_ssl_cert = "${puppet_home}/ssl/certs/${::fqdn}.pem"
   $client_ssl_key  = "${puppet_home}/ssl/private_keys/${::fqdn}.pem"
 
+  $vhost_ssl_ca   = $client_ssl_ca
+  $vhost_ssl_cert = $client_ssl_cert
+  $vhost_ssl_key  = $client_ssl_key
+
   # We need the REST API interface with OAuth for some REST Puppet providers
   $oauth_active = true
   $oauth_map_users = true

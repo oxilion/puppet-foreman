@@ -5,6 +5,11 @@ class foreman::config::passenger (
   $scl_prefix = undef
 ) {
 
+  $ssl_cert  = $foreman::vhost_ssl_cert
+  $ssl_key   = $foreman::vhost_ssl_key
+  $ssl_ca    = $foreman::vhost_ssl_ca
+  $ssl_chain = $foreman::vhost_ssl_ca
+
   # validate parameter values
   validate_string($listen_on_interface)
 
@@ -58,10 +63,10 @@ class foreman::config::passenger (
     apache::vhost { 'foreman-ssl':
       port            => 443,
       ssl             => true,
-      ssl_cert        => "/var/lib/puppet/ssl/certs/${::fqdn}.pem",
-      ssl_key         => "/var/lib/puppet/ssl/private_keys/${::fqdn}.pem",
-      ssl_chain       => '/var/lib/puppet/ssl/certs/ca.pem',
-      ssl_ca          => '/var/lib/puppet/ssl/certs/ca.pem',
+      ssl_cert        => $ssl_cert,
+      ssl_key         => $ssl_key,
+      ssl_ca          => $ssl_ca,
+      ssl_chain       => $ssl_chain,
       custom_fragment => template('foreman/apache-fragment.conf.erb', 'foreman/apache-fragment-ssl.conf.erb'),
     }
   }
