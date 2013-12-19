@@ -18,8 +18,20 @@
 # $use_vhost::              Enclose apache configuration in <VirtualHost>...</VirtualHost>
 #                           type:boolean
 #
-# $ssl::                    Enable and set require_ssl in Foreman settings (note: requires passenger, SSL does not apply to kickstarts)
+# $ssl::                    Enable and set require_ssl in Foreman settings (note: requires passenger, SSL does not apply to kickstarts)=
 #                           type:boolean
+#
+# $ssl_cert::               Path to SSL cert to be used with SSL Apache::Vhost.
+#                           type: string
+#
+# $ssl_key::                Path to SSL private key to be used with SSL Apache::Vhost.
+#                           type: string
+#
+# $ssl_ca::                 Path to SSL CA cert to be used with SSL Apache::Vhost.
+#                           type: string
+#
+# $ssl_chain::              Path to SSL CA chain to be used with SSL Apache::Vhost.
+#                           trype: string
 #
 # $custom_repo::            No need to change anything here by default
 #                           if set to true, no repo will be added by this module, letting you to
@@ -99,6 +111,10 @@ class foreman (
   $passenger_scl          = $foreman::params::passenger_scl,
   $use_vhost              = $foreman::params::use_vhost,
   $ssl                    = $foreman::params::ssl,
+  $ssl_cert               = $foreman::params::vhost_ssl_cert,
+  $ssl_key                = $foreman::params::vhost_ssl_key,
+  $ssl_ca                 = $foreman::params::vhost_ssl_ca,
+  $ssl_chain              = $foreman::params::vhost_ssl_ca,
   $custom_repo            = $foreman::params::custom_repo,
   $repo                   = $foreman::params::repo,
   $selinux                = $foreman::params::selinux,
@@ -138,7 +154,12 @@ class foreman (
     $db_adapter_real = $db_adapter
   }
   class { 'foreman::install': } ~>
-  class { 'foreman::config': } ~>
+  class { 'foreman::config':
+    ssl_cert  => $ssl_cert,
+    ssl_key   => $ssl_key,
+    ssl_ca    => $ssl_ca,
+    ssl_chain => $ssl_ca,
+  } ~>
   class { 'foreman::database': } ~>
   class { 'foreman::service': } ->
   Class['foreman'] ->

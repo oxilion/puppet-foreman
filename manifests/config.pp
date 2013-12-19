@@ -1,5 +1,10 @@
 # Configure foreman
-class foreman::config {
+class foreman::config (
+  $ssl_cert  = $foreman::params::vhost_ssl_cert,
+  $ssl_key   = $foreman::params::vhost_ssl_key,
+  $ssl_ca    = $foreman::params::vhost_ssl_ca,
+  $ssl_chain = $foreman::params::vhost_ssl_ca,
+) {
   Cron {
     require     => User[$foreman::user],
     user        => $foreman::user,
@@ -70,7 +75,11 @@ class foreman::config {
 
   if $foreman::passenger  {
     class{'foreman::config::passenger':
-      listen_on_interface => $foreman::passenger_interface,
+      listen_on_interface => $foreman::passenger_interfce,
+      ssl_cert            => $ssl_cert,
+      ssl_key             => $ssl_key,
+      ssl_ca              => $ssl_ca,
+      ssl_chain           => $ssl_ca,
       scl_prefix          => $foreman::passenger_scl,
     }
   }
