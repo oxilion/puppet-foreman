@@ -142,7 +142,12 @@ class foreman (
     $db_adapter_real = $db_adapter
   }
   class { 'foreman::install': } ~>
-  class { 'foreman::config': } ~>
+  class { 'foreman::config':
+    ssl_cert  => $ssl_cert,
+    ssl_key   => $ssl_key,
+    ssl_ca    => $ssl_ca,
+    ssl_chain => $ssl_ca,
+  } ~>
   class { 'foreman::database': } ~>
   class { 'foreman::service': } ->
   Class['foreman'] ->

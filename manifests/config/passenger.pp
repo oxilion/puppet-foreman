@@ -2,13 +2,14 @@
 class foreman::config::passenger (
   # specifiy which interface to bind passenger to eth0, eth1, ...
   $listen_on_interface = '',
+  $ssl_cert = $foreman::params::vhost_ssl_cert,
+  $ssl_key = $foreman::params::vhost_ssl_key,
+  $ssl_ca = $foreman::params::vhost_ssl_ca,
+  $ssl_chain = $foreman::params::vhost_ssl_ca,
   $scl_prefix = undef
 ) {
 
-  $ssl_cert  = $foreman::vhost_ssl_cert
-  $ssl_key   = $foreman::vhost_ssl_key
-  $ssl_ca    = $foreman::vhost_ssl_ca
-  $ssl_chain = $foreman::vhost_ssl_ca
+
 
   # validate parameter values
   validate_string($listen_on_interface)
